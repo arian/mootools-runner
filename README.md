@@ -19,8 +19,7 @@ Set up the Specs:
 
 ### Requirements
 
-* NodeJS
-* PHP (for Packager)
+* NodeJS (if you want to test in NodeJS)
 
 ### Usage
 
