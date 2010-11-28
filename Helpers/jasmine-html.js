@@ -83,7 +83,7 @@ jasmine.TrivialReporter.prototype.createDom = function(type, attrs, childrenVarA
 };
 
 jasmine.TrivialReporter.prototype.reportRunnerStarting = function(runner) {
-  var showPassed, showSkipped;
+  var showPassed, showSkipped, playMoo;
 
   var query = jasmine.parseQueryString(document.location.search.substr(1));
   delete query.spec;
@@ -98,7 +98,9 @@ jasmine.TrivialReporter.prototype.reportRunnerStarting = function(runner) {
             showPassed = this.createDom('input', {id: "__jasmine_TrivialReporter_showPassed__", type: 'checkbox'}),
             this.createDom('label', {"for": "__jasmine_TrivialReporter_showPassed__"}, " passed "),
             showSkipped = this.createDom('input', {id: "__jasmine_TrivialReporter_showSkipped__", type: 'checkbox'}),
-            this.createDom('label', {"for": "__jasmine_TrivialReporter_showSkipped__"}, " skipped")
+            this.createDom('label', {"for": "__jasmine_TrivialReporter_showSkipped__"}, " skipped"),
+            playMoo = this.createDom('input', {id: "__jasmine_TrivialReporter_playMoo__", type: 'checkbox'}),
+            this.createDom('label', {"for": "__jasmine_TrivialReporter_playMoo__"}, " Moo!")
             )
           ),
 
@@ -145,6 +147,24 @@ jasmine.TrivialReporter.prototype.reportRunnerStarting = function(runner) {
     }
   };
 
+  var self = this;
+  playMoo.onchange = function(evt) {
+  	if (evt.target.checked) {
+	  if (/passed/.test(self.runnerDiv.className)){
+        var moo = self.createDom('div');
+		moo.id = 'playMoo';
+	    moo.style.cssText = 'margin: 10px auto; width: 640px';
+        moo.innerHTML = '<iframe title="YouTube video player" class="youtube-player" type="text/html" width="640" height="390" src="http://www.youtube.com/embed/tv3Tm2mEL3o?rel=0&autoplay=1" frameborder="0"></iframe>';
+        self.document.body.appendChild(moo);
+	  }
+	} else {
+	  var moo = document.getElementById('playMoo');
+	  if (moo) {
+	  	moo.parentNode.removeChild(moo);
+	  }
+	}
+  }
+
   runner.env.specFilter = this.specFilter;
 
 };
@@ -167,13 +187,6 @@ jasmine.TrivialReporter.prototype.reportRunnerResults = function(runner) {
   this.runnerMessageSpan.replaceChild(this.createDom('a', {className: 'description', href: '#'}, message), this.runnerMessageSpan.firstChild);
 
   this.finishedAtSpan.appendChild(document.createTextNode("Finished at " + new Date().toString()));
-
-  if (results.failedCount == 0){
-    var moo = this.createDom('div');
-	moo.style.cssText = 'margin: 10px auto; width: 640px';
-    moo.innerHTML = '<iframe title="YouTube video player" class="youtube-player" type="text/html" width="640" height="390" src="http://www.youtube.com/embed/tv3Tm2mEL3o?rel=0&autoplay=1" frameborder="0"></iframe>';
-    this.document.body.appendChild(moo);
-  }
 
 };
 
