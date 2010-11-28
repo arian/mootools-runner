@@ -170,6 +170,7 @@ jasmine.TrivialReporter.prototype.reportRunnerResults = function(runner) {
 
   if (results.failedCount == 0){
     var moo = this.createDom('div');
+	moo.style.cssText = 'margin: 10px auto; width: 640px';
     moo.innerHTML = '<iframe title="YouTube video player" class="youtube-player" type="text/html" width="640" height="390" src="http://www.youtube.com/embed/tv3Tm2mEL3o?rel=0&autoplay=1" frameborder="0"></iframe>';
     this.document.body.appendChild(moo);
   }
