@@ -15,7 +15,7 @@ jasmine.toQueryString = function(object, base){
 		} else {
 			result = key + '=' + encodeURIComponent(value);
 		}
-		
+
 		if (value != undefined) queryString.push(result);
 	})(object[i], i);
 
@@ -87,7 +87,7 @@ jasmine.TrivialReporter.prototype.reportRunnerStarting = function(runner) {
 
   var query = jasmine.parseQueryString(document.location.search.substr(1));
   delete query.spec;
-  
+
    this.outerDiv = this.createDom('div', {className: 'jasmine_reporter'},
       this.createDom('div', {className: 'banner'},
         this.createDom('div', {className: 'logo'},
@@ -167,6 +167,13 @@ jasmine.TrivialReporter.prototype.reportRunnerResults = function(runner) {
   this.runnerMessageSpan.replaceChild(this.createDom('a', {className: 'description', href: '#'}, message), this.runnerMessageSpan.firstChild);
 
   this.finishedAtSpan.appendChild(document.createTextNode("Finished at " + new Date().toString()));
+
+  if (results.failedCount == 0){
+    var moo = this.createDom('div');
+    moo.innerHTML = '<iframe title="YouTube video player" class="youtube-player" type="text/html" width="640" height="390" src="http://www.youtube.com/embed/tv3Tm2mEL3o?rel=0&autoplay=1" frameborder="0"></iframe>';
+    this.document.body.appendChild(moo);
+  }
+
 };
 
 jasmine.TrivialReporter.prototype.reportSuiteResults = function(suite) {
@@ -193,7 +200,7 @@ jasmine.TrivialReporter.prototype.reportSpecResults = function(spec) {
 
   var query = jasmine.parseQueryString(document.location.search.substr(1));
   query.spec = spec.getFullName();
-  
+
   var specDiv = this.createDom('div', {className: 'spec '  + status},
       this.createDom('a', {className: 'run_spec', href: '?' + jasmine.toQueryString(query)}, "run"),
       this.createDom('a', {
