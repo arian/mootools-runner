@@ -57,7 +57,7 @@ require({
 		'Core': '../../Source',
 		'Slick': '../../Source/Slick'
 	},
-	urlArgs: 'bust=' +  (new Date()).getTime()
+	urlArgs: 'bust=' +  (+new Date())
 });
 
 loader.setSourceLoader(function(){} || load).setSpecLoader(load);
