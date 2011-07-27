@@ -10,3 +10,6 @@
 [submodule "Helpers/Sinon.JS"]
 	path = Helpers/Sinon.JS
 	url = https://github.com/cjohansen/Sinon.JS.git
+[submodule "Helpers/requirejs"]
+	path = Helpers/requirejs
+	url = https://github.com/jrburke/requirejs.git

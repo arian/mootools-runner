@@ -21,6 +21,7 @@
 <script type="text/javascript" charset="utf-8" src="Helpers/Sinon.JS/lib/sinon/util/fake_timers.js"></script>
 <script type="text/javascript" charset="utf-8" src="Helpers/Sinon.JS/lib/sinon/util/timers_ie.js"></script>
 <script type="text/javascript" charset="utf-8" src="Helpers/Loader.js"></script>
+<script type="text/javascript" charset="utf-8" src="Helpers/requirejs/require.js"></script>
 <script type="text/javascript" charset="utf-8" src="../Configuration.js"></script>
 
 <script type="text/javascript" charset="utf-8">
@@ -29,6 +30,15 @@ var SetNames = [],
 	SourceNames = [];
 
 (function(){
+	
+var runSpecs = function(){
+	// Run the specs
+	jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
+	jasmine.getEnv().execute();
+	
+	// Change title
+	document.title = 'Specs for ' + Configuration.name;
+};
 
 // Load all the specs
 var loader = SpecLoader(Configuration, jasmine.parseQueryString(document.location.search.substr(1)));
@@ -37,20 +47,26 @@ var load = function(object, base){
 		document.write('<scr'+'ipt src="../' + (base || '') + object[j] + '.js" type="text/javascript"><\/script>');
 };
 
-loader.setSourceLoader(load).setSpecLoader(load);
+var load = function(files, base){
+	for (var j = 0; j < files.length; j++) files[j] = '../' + (base || '') + files[j];
+	require(files, runSpecs);
+};
+
+require({
+	paths: {
+		'Core': '../../Source',
+		'Slick': '../../Source/Slick'
+	},
+	urlArgs: 'bust=' +  (new Date()).getTime()
+});
+
+loader.setSourceLoader(function(){} || load).setSpecLoader(load);
 loader.run();
 
 SetNames = loader.getSetNames();
 SourceNames = loader.getSourceNames();
 
-window.onload = function(){
-	// Run the specs
-	jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
-	jasmine.getEnv().execute();
-	
-	// Change title
-	document.title = 'Specs for ' + Configuration.name;
-};
+if (false) window.onload = runSpecs;
 
 })();
 </script>
