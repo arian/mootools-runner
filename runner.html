@@ -28,11 +28,14 @@
 
 var SetNames = [],
 	SourceNames = [];
+	
+	once = true;
 
 (function(){
 	
 var runSpecs = function(){
 	// Run the specs
+	if (once) jasmine.getEnv().addReporter(new jasmine.TrivialReporter()), once = false;
 	jasmine.getEnv().execute();
 	
 	// Change title
@@ -64,10 +67,6 @@ loader.run();
 
 SetNames = loader.getSetNames();
 SourceNames = loader.getSourceNames();
-
-window.onload = function(){
-	jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
-};
 
 })();
 </script>
