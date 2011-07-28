@@ -33,7 +33,6 @@ var SetNames = [],
 	
 var runSpecs = function(){
 	// Run the specs
-	jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
 	jasmine.getEnv().execute();
 	
 	// Change title
@@ -66,7 +65,9 @@ loader.run();
 SetNames = loader.getSetNames();
 SourceNames = loader.getSourceNames();
 
-if (false) window.onload = runSpecs;
+window.onload = function(){
+	jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
+};
 
 })();
 </script>
